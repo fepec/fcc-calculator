@@ -11,21 +11,22 @@ export default function Calculator() {
     for (let i = 0; i < 3; i++) {
         let row = []
         for (let j = 1; j <= 3; j++) {
-            row.push(<NumberButton k={i * 3 + j} />)
+            row.push(<NumberButton key={i * 3 + j} k={i * 3 + j} />)
         }
-        numpad.push(<div key={"numrow" + i} className="num-row" >
+        numpad.push(<div key={"numpadrow" + i} className="num-row d-flex justify-content-center" >
             {row}
         </div>)
     }
-    numpad.push(<div key={"numrow4"} className="num-row d-flex justify-content-center">
-        <NumberButton k={0} />
+    numpad.push(<div key={"numpadrow" + 4} className="num-row d-flex justify-content-center">
+        <NumberButton key={0} k={0} />
     </div>)
 
     return <div className="container">
         <h2>this is a calculator</h2>
         <ViewScreen />
         <div className="d-flex">
-            <div className=''>{numpad}
+            <div className=''>
+                {numpad}
             </div>
             <div><OperationButton /></div>
         </div>
