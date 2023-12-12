@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import NumberButton from './NumberButton'
 import OperationButton from './OperationButton'
-import ViewScreen from './ViewScreen'
+import Display from './Display'
 
 export default function Calculator() {
 
@@ -23,7 +23,7 @@ export default function Calculator() {
 
     return <div className="container">
         <h2>this is a calculator</h2>
-        <ViewScreen />
+        <Display />
         <div className="d-flex">
             <div className=''>
                 {numpad}
