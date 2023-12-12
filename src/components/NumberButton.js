@@ -1,6 +1,6 @@
 import React from 'react'
 
 
-export default function NumberButton() {
-    return <div>this is a number button</div>
+export default function NumberButton({k}) {
+    return <button id={k}>this is num button {k}</button>
 }
