@@ -16,15 +16,16 @@ export default function Calculator() {
         numpad.push(<div key={"numrow" + i} className="num-row" >
             {row}
         </div>)
-
     }
+    numpad.push(<div key={"numrow4"} className="num-row d-flex justify-content-center">
+        <NumberButton k={0} />
+    </div>)
 
-    return <div>
+    return <div className="container">
         <h2>this is a calculator</h2>
         <ViewScreen />
         <div className="d-flex">
-            <div>{numpad}
-                <NumberButton k="0" />
+            <div className=''>{numpad}
             </div>
             <div><OperationButton /></div>
         </div>
