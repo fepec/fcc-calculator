@@ -34,6 +34,14 @@ export default function Calculator() {
         setActiveOperation("")
     }
 
+    function handleDecimalClick() {
+        if (displayValue.match(/\./g) == null) {
+            let valueArray = displayValue.split('')
+            valueArray.push(".")
+            setDisplayValue(valueArray.join(''))
+        }
+    }
+
 
     let numpad = []
 
@@ -49,7 +57,7 @@ export default function Calculator() {
     numpad.push(<div key={"numpadrow" + 4} className="num-row d-flex justify-content-end">
         <OperationButton operation="clear" onOperationButtonClick={handleClearClick} />
         <NumberButton key={0} k={0} onNumberButtonClick={handleNumberClick} />
-        <OperationButton operation="decimal" onOperationButtonClick={handleOperationClick} />
+        <OperationButton operation="decimal" onOperationButtonClick={handleDecimalClick} />
     </div>)
 
     return <div className="container d-flex align-items-end justify-content-center">
