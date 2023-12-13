@@ -26,6 +26,6 @@ const operations = {
     }
 }
 
-export default function OperationButton({operation}) {
-    return <button id={operation} className='btn btn-secondary m-1'>{String.fromCharCode(operations[operation].symbol)}</button>
+export default function OperationButton({operation, onOperationButtonClick}) {
+    return <button id={operation} className='btn btn-secondary m-1' onClick={onOperationButtonClick}>{String.fromCharCode(operations[operation].symbol)}</button>
 }
