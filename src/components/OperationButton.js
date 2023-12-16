@@ -2,30 +2,31 @@ import React from 'react'
 
 const operations = {
     "equals": {
-        "symbol": 61
+        "symbol": "="
     },
     "add": {
-        "symbol": 43
+        "symbol": "+"
     },
     "subtract":
     {
-        "symbol": 8722
+        "symbol": "-"
     },
     "multiply":
     {
-        "symbol": 215
+        "symbol": "*"
     },
     "divide": {
-        "symbol": 247
+        "symbol": "/"
     },
     "decimal": {
-        "symbol":  46 
+        "symbol":  "." 
     },
     "clear": {
-        "symbol": 67
+        "symbol": "C"
     }
 }
 
 export default function OperationButton({operation, onOperationButtonClick}) {
-    return <button id={operation} className='btn btn-secondary m-1' onClick={onOperationButtonClick}>{String.fromCharCode(operations[operation].symbol)}</button>
+    // return <button id={operation} className='btn btn-secondary m-1' onClick={onOperationButtonClick}>{String.fromCharCode(operations[operation].symbol)}</button>
+    return <button id={operation} className='btn btn-secondary m-1' onClick={onOperationButtonClick}>{operations[operation].symbol}</button>
 }
