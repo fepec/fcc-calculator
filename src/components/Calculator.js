@@ -12,22 +12,40 @@ export default function Calculator() {
     const [secondValue, setSecondValue] = useState(0)
     const [activeOperation, setActiveOperation] = useState("")
     const [resetOnNextDigit, setResetOnNextDigit] = useState(false)
+    const [negateSecondValue, setNegateSecondValue] = useState(false)
+    const [lastKeypressType, setLastKeypressType] = useState("")
 
     // event handler functions
     function handleNumberClick(e) {
-        if(resetOnNextDigit) {
+        if (resetOnNextDigit) {
             setDisplayValue(String(e.target.innerHTML))
             setResetOnNextDigit(false)
         } else {
-        appendToDisplay(e.target.innerHTML)
+            appendToDisplay(e.target.innerHTML)
         }
+        setLastKeypressType("num")
     }
 
     function handleOperationClick(e) {
-        setFirstValue(Number(displayValue))
-        setActiveOperation(e.target.innerHTML)
+        
+        if (lastKeypressType === "op" && e.target.innerHTML === "-") {
+            setNegateSecondValue(true)
+        } else if (lastKeypressType === "op") {
+            setNegateSecondValue(false);
+            setActiveOperation(e.target.innerHTML)
+
+        } else if (firstValue ) {
+            // if firstValue (there is a first value and active operation set), then execute operation and display result.
+            let operationResult = executeOperation(firstValue, Number(displayValue), activeOperation)
+            setDisplayValue(operationResult)
+            setFirstValue(operationResult)
+            setActiveOperation(e.target.innerHTML)
+        } else {
+            setFirstValue(Number(displayValue))
+            setActiveOperation(e.target.innerHTML)
+        }
         setResetOnNextDigit(true)
-        // setDisplayValue("0")
+        setLastKeypressType("op")
     }
 
     function handleClearClick() {
@@ -35,6 +53,7 @@ export default function Calculator() {
         setFirstValue(0)
         setSecondValue(0)
         setActiveOperation("")
+        setNegateSecondValue(false);
     }
 
     function handleDecimalClick() {
@@ -46,7 +65,7 @@ export default function Calculator() {
     }
 
     function handleEqualsClick() {
-        console.log("dv",displayValue)
+        console.log("dv", displayValue)
         setSecondValue(Number(displayValue))
         setResetOnNextDigit(true)
         let v2 = Number(displayValue)
@@ -58,36 +77,39 @@ export default function Calculator() {
         setFirstValue(0);
         // setSecondValue(0);
         setActiveOperation("")
+        setLastKeypressType("")
     }
     // support functions (I may move these into the functions above later)
     function appendToDisplay(value) {
         let valueArray = displayValue.split('')
-        
+
         if (valueArray.length == 1 && valueArray[0] == "0") {
             valueArray = [value]
         } else {
             valueArray.push(value)
         }
-        
+
         setDisplayValue(valueArray.join(''))
     }
 
     function executeOperation(v1, v2, operation) {
         let result
+        let negator = negateSecondValue ? -1 : 1
         switch (operation) {
             case "+":
-                result = v1 + v2;
+                result = v1 + v2 * negator;
                 break;
             case "-":
-                result = v1 - v2;
+                result = v1 - v2 * negator;
                 break;
             case "*":
-                result = v1 * v2
+                result = v1 * v2 * negator
                 break;
             case "/":
-                result = v2 === 0 ? "ERROR" : v1 / v2;
+                result = v2 === 0 ? "ERROR" : v1 / v2 * negator;
                 break;
         }
+        setNegateSecondValue(false)
         return result
     }
 
@@ -122,9 +144,6 @@ export default function Calculator() {
                 <OperationButton operation="add" onOperationButtonClick={handleOperationClick} />
                 <OperationButton operation="equals" onOperationButtonClick={handleEqualsClick} />
             </div>
-        </div>
-        <div>
-            <SecondaryDisplay text={`${firstValue}${activeOperation}${secondValue}=`} />
         </div>
     </div>
 
